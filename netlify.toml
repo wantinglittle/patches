@@ -1,0 +1,33 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Plugin to automatically install function dependencies
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+# Redirect all API calls to the functions
+[[redirects]]
+  from = "/api/stripe-config"
+  to = "/.netlify/functions/stripe-config"
+  status = 200
+
+[[redirects]]
+  from = "/api/create-payment-intent"
+  to = "/.netlify/functions/create-payment-intent"
+  status = 200
+
+# Handle client-side routing for success page
+[[redirects]]
+  from = "/success"
+  to = "/success.html"
+  status = 200
+
+# Default fallback for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
