@@ -7,16 +7,12 @@ let clientSecret;
 function mapFieldName(fieldName, packageId) {
     const fieldMapping = {
         'classic': {
-            'color-scheme': 'colorScheme',
             'delivery-date': 'delivery',
-            'add-ons': 'addons'
+            'setup': 'setup'
         },
         'premium': {
-            'style-theme': 'theme',
-            'delivery-date': 'delivery',
-            // map premium setup/select to the same 'addons' key server expects
-            'setup-service': 'addons',
-            'premium-add-ons': 'addons'
+            'delivery-date': 'delivery', 
+            'setup': 'setup'
         }
     };
     return (fieldMapping[packageId] && fieldMapping[packageId][fieldName]) || fieldName;
@@ -69,27 +65,12 @@ function hideCustomization(packageId) {
 // Calculate total price based on selections
 function calculateTotalPrice(packageId, basePrice) {
     let total = basePrice;
-    if (packageId === 'classic') {
-        const addOnSelect = document.getElementById('add-ons-classic');
-        if (addOnSelect && addOnSelect.value) {
-            switch (addOnSelect.value) {
-                case 'extra-mums': total += 25; break;
-                case 'corn-stalks': total += 35; break;
-                case 'setup-service': total += 90; break;
-            }
-        }
-    } else if (packageId === 'premium') {
-        const setupSelect = document.getElementById('setup-service-premium');
-        if (setupSelect && setupSelect.value === 'full-setup') {
+    const setupSelect = document.getElementById(`setup-${packageId}`);
+    if (setupSelect && setupSelect.value) {
+        // Both packages charge $90 for setup service
+        if ((packageId === 'classic' && setupSelect.value === 'setup-service') ||
+            (packageId === 'premium' && setupSelect.value === 'full-setup')) {
             total += 90;
-        }
-        const addOnSelect = document.getElementById('premium-add-ons');
-        if (addOnSelect && addOnSelect.value) {
-            switch (addOnSelect.value) {
-                case 'scarecrow': total += 75; break;
-                case 'lighting': total += 125; break;
-                case 'maintenance': total += 100; break;
-            }
         }
     }
     return total;
@@ -119,7 +100,7 @@ function initializePriceUpdates() {
     });
 
     // Ensure premium setup option updates total
-    const premiumSetup = document.getElementById('setup-service-premium');
+    const premiumSetup = document.getElementById('setup-premium');
     if (premiumSetup) {
         premiumSetup.addEventListener('change', () => updateTotalPriceDisplay('premium', 625));
     }
@@ -155,6 +136,7 @@ async function proceedToCheckout(packageId, basePrice) {
     requiredFields.forEach(field => {
         const fieldName = field.id.replace(`-${packageId}`, '');
         const mappedFieldName = mapFieldName(fieldName, packageId);
+        console.log(`Field mapping: ${field.id} → ${fieldName} → ${mappedFieldName} = ${field.value}`);
         orderData.customizations[mappedFieldName] = field.value;
     });
 
@@ -169,6 +151,9 @@ async function showCheckoutModal(orderData) {
     try {
         if (!stripe) throw new Error('Stripe not initialized. Please refresh the page.');
 
+        // Debug: Log what we're sending to the server
+        console.log('Sending to server:', { packageId: orderData.packageId, customizations: orderData.customizations });
+        
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -177,6 +162,7 @@ async function showCheckoutModal(orderData) {
 
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Server error:', errorData);
             throw new Error(errorData.message || 'Failed to create payment intent');
         }
 

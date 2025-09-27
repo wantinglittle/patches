@@ -19,8 +19,7 @@ const PACKAGE_CATALOG = {
       },
       addons: {
         none: 0,
-        'setup-service': 9000, // $90 extra
-        // 'corn-stalks': 3500, // $35 extra
+        'setup-classic': 9000, // $90 extra
       },
     },
   },
