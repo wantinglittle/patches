@@ -13,11 +13,13 @@ function mapFieldName(fieldName, packageId) {
         },
         'premium': {
             'style-theme': 'theme',
-            'setup-service': 'setup',
-            'premium-add-ons': 'premiumAddons'
+            'delivery-date': 'delivery',
+            // map premium setup/select to the same 'addons' key server expects
+            'setup-service': 'addons',
+            'premium-add-ons': 'addons'
         }
     };
-    return fieldMapping[packageId][fieldName] || fieldName;
+    return (fieldMapping[packageId] && fieldMapping[packageId][fieldName]) || fieldName;
 }
 
 // Smooth scroll to section
