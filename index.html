@@ -119,6 +119,15 @@
                                     <option value="setup-service">Yes, please! (+$90)</option>
                                 </select>
                             </div>
+                            <div class="dropdown-group">
+                                <label for="zone-classic">What map zone are you in (<a href="#" onclick="showMap()" class="map-link">click here to view map</a>)?</label>
+                                <select id="zone-classic" class="dropdown">
+                                    <option value="">Select delivery zone</option>
+                                    <option value="zone1">Zone 1 (Free Delivery)</option>
+                                    <option value="zone2">Zone 2 ($35 Delivery)</option>
+                                    <option value="zone3">Zone 3 ($85 Delivery)</option>
+                                </select>
+                            </div>
 
                             <!-- Dynamic Total Price Display -->
                             <div class="total-price-display">
@@ -195,6 +204,15 @@
                                     <option value="full-setup">Yes, please! (+$90)</option>
                                     
                                     <!-- <option value="diy-guide">DIY with Guide</option> -->
+                                </select>
+                            </div>
+                            <div class="dropdown-group">
+                                <label for="zone-premium">What map zone are you in (<a href="#" onclick="showMap()" class="map-link">click here to view map</a>)?</label>
+                                <select id="zone-premium" class="dropdown">
+                                    <option value="">Select delivery zone</option>
+                                    <option value="zone1">Zone 1 (Free Delivery)</option>
+                                    <option value="zone2">Zone 2 ($35 Delivery)</option>
+                                    <option value="zone3">Zone 3 ($85 Delivery)</option>
                                 </select>
                             </div>
 
@@ -283,6 +301,15 @@
                                     <option value="">Select setup option</option>
                                     <option value="delivery-only">No thanks, I've got this</option>
                                     <option value="full-setup">Yes, please! (+$90)</option>
+                                </select>
+                            </div>
+                            <div class="dropdown-group">
+                                <label for="zone-grand">What map zone are you in (<a href="#" onclick="showMap()" class="map-link">click here to view map</a>)?</label>
+                                <select id="zone-grand" class="dropdown">
+                                    <option value="">Select delivery zone</option>
+                                    <option value="zone1">Zone 1 (Free Delivery)</option>
+                                    <option value="zone2">Zone 2 ($35 Delivery)</option>
+                                    <option value="zone3">Zone 3 ($85 Delivery)</option>
                                 </select>
                             </div>
 
@@ -507,6 +534,19 @@
                     <span id="button-text">Complete Purchase</span>
                     <div id="spinner" class="spinner" style="display: none;"></div>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Popup Modal -->
+    <div id="map-modal" class="modal" style="display: none;">
+        <div class="modal-content map-modal-content">
+            <div class="modal-header">
+                <h3>Delivery Zone Map</h3>
+                <span class="close" onclick="closeMap()">&times;</span>
+            </div>
+            <div class="modal-body map-modal-body">
+                <img src="images/map.jpg" alt="Delivery Zone Map" class="map-image">
             </div>
         </div>
     </div>

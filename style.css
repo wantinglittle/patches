@@ -952,3 +952,113 @@ body {
     padding: 20px;
   }
 }
+
+/* Map Modal Styles */
+.map-link {
+  color: #D2691E;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.map-link:hover {
+  color: #B8621B;
+  text-decoration: none;
+}
+
+.map-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.map-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-image {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #DEB887;
+  width: 100%;
+  max-width: 600px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #3E2723;
+}
+
+.zone-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.zone-color.zone1 {
+  background-color: #4CAF50;
+}
+
+.zone-color.zone2 {
+  background-color: #FF9800;
+}
+
+.zone-color.zone3 {
+  background-color: #F44336;
+}
+
+/* Responsive map modal */
+@media (max-width: 768px) {
+  .map-modal-content {
+    margin: 20px;
+    max-width: calc(100vw - 40px);
+  }
+  
+  .map-legend {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .map-image {
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-modal-content {
+    margin: 10px;
+    max-width: calc(100vw - 20px);
+  }
+  
+  .map-modal-body {
+    padding: 15px;
+  }
+  
+  .map-image {
+    max-height: 50vh;
+  }
+}

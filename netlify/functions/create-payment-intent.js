@@ -21,6 +21,11 @@ const PACKAGE_CATALOG = {
         'none': 0,
         'setup-service': 9000, // $90 extra
       },
+      zone: {
+        zone1: 0, // Free delivery
+        zone2: 3500, // $35 delivery
+        zone3: 8500, // $85 delivery
+      },
     },
   },
   premium: {
@@ -37,6 +42,11 @@ const PACKAGE_CATALOG = {
         'delivery-only': 0,
         'full-setup': 9000, // $90 extra
       },
+      zone: {
+        zone1: 0, // Free delivery
+        zone2: 3500, // $35 delivery
+        zone3: 8500, // $85 delivery
+      },
     },
   },
   grand: {
@@ -52,6 +62,11 @@ const PACKAGE_CATALOG = {
       setup: {
         'delivery-only': 0,
         'full-setup': 9000, // $90 extra
+      },
+      zone: {
+        zone1: 0, // Free delivery
+        zone2: 3500, // $35 delivery
+        zone3: 8500, // $85 delivery
       },
     },
   },
@@ -162,9 +177,14 @@ exports.handler = async (event, context) => {
       
       const setupText = customizations.setup === 'full-setup' || customizations.setup === 'setup-service' ? 
                        'Professional Setup (+$90)' : 'DIY Delivery Only';
+                       
+      const zoneText = customizations.zone === 'zone1' ? 'Zone 1 (Free Delivery)' :
+                       customizations.zone === 'zone2' ? 'Zone 2 ($35 Delivery)' :
+                       customizations.zone === 'zone3' ? 'Zone 3 ($85 Delivery)' : 'Zone not specified';
       
       metadata.deliveryDate = deliveryText;
       metadata.setupOption = setupText;
+      metadata.deliveryZone = zoneText;
     }
 
     const paymentIntentData = {

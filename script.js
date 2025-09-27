@@ -69,6 +69,8 @@ function hideCustomization(packageId) {
 // Calculate total price based on selections
 function calculateTotalPrice(packageId, basePrice) {
     let total = basePrice;
+    
+    // Add setup service cost
     const setupSelect = document.getElementById(`setup-${packageId}`);
     if (setupSelect && setupSelect.value) {
         // All packages charge $90 for setup service
@@ -78,6 +80,18 @@ function calculateTotalPrice(packageId, basePrice) {
             total += 90;
         }
     }
+    
+    // Add zone delivery cost
+    const zoneSelect = document.getElementById(`zone-${packageId}`);
+    if (zoneSelect && zoneSelect.value) {
+        if (zoneSelect.value === 'zone2') {
+            total += 35;
+        } else if (zoneSelect.value === 'zone3') {
+            total += 85;
+        }
+        // zone1 is free delivery, no cost added
+    }
+    
     return total;
 }
 
@@ -119,6 +133,22 @@ function initializePriceUpdates() {
     const grandSetup = document.getElementById('setup-grand');
     if (grandSetup) {
         grandSetup.addEventListener('change', () => updateTotalPriceDisplay('grand', 895));
+    }
+
+    // Add zone listeners for all packages
+    const classicZone = document.getElementById('zone-classic');
+    if (classicZone) {
+        classicZone.addEventListener('change', () => updateTotalPriceDisplay('classic', 360));
+    }
+
+    const premiumZone = document.getElementById('zone-premium');
+    if (premiumZone) {
+        premiumZone.addEventListener('change', () => updateTotalPriceDisplay('premium', 625));
+    }
+
+    const grandZone = document.getElementById('zone-grand');
+    if (grandZone) {
+        grandZone.addEventListener('change', () => updateTotalPriceDisplay('grand', 895));
     }
 }
 
@@ -604,3 +634,28 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     });
 });
+
+// Map Modal Functions
+function showMap() {
+    const modal = document.getElementById('map-modal');
+    modal.style.display = 'flex';
+    
+    // Close map modal when clicking outside
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeMap();
+        }
+    });
+    
+    // Close map modal with escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeMap();
+        }
+    });
+}
+
+function closeMap() {
+    const modal = document.getElementById('map-modal');
+    modal.style.display = 'none';
+}
