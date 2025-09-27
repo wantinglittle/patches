@@ -13,6 +13,10 @@ function mapFieldName(fieldName, packageId) {
         'premium': {
             'delivery-date': 'delivery', 
             'setup': 'setup'
+        },
+        'grand': {
+            'delivery-date': 'delivery',
+            'setup': 'setup'
         }
     };
     return (fieldMapping[packageId] && fieldMapping[packageId][fieldName]) || fieldName;
@@ -67,9 +71,10 @@ function calculateTotalPrice(packageId, basePrice) {
     let total = basePrice;
     const setupSelect = document.getElementById(`setup-${packageId}`);
     if (setupSelect && setupSelect.value) {
-        // Both packages charge $90 for setup service
+        // All packages charge $90 for setup service
         if ((packageId === 'classic' && setupSelect.value === 'setup-service') ||
-            (packageId === 'premium' && setupSelect.value === 'full-setup')) {
+            (packageId === 'premium' && setupSelect.value === 'full-setup') ||
+            (packageId === 'grand' && setupSelect.value === 'full-setup')) {
             total += 90;
         }
     }
@@ -99,10 +104,21 @@ function initializePriceUpdates() {
         dropdown.addEventListener('change', () => updateTotalPriceDisplay('premium', 625));
     });
 
+    const grandDropdowns = document.querySelectorAll('#customization-grand .dropdown');
+    grandDropdowns.forEach(dropdown => {
+        dropdown.addEventListener('change', () => updateTotalPriceDisplay('grand', 895));
+    });
+
     // Ensure premium setup option updates total
     const premiumSetup = document.getElementById('setup-premium');
     if (premiumSetup) {
         premiumSetup.addEventListener('change', () => updateTotalPriceDisplay('premium', 625));
+    }
+
+    // Ensure grand setup option updates total
+    const grandSetup = document.getElementById('setup-grand');
+    if (grandSetup) {
+        grandSetup.addEventListener('change', () => updateTotalPriceDisplay('grand', 895));
     }
 }
 
@@ -127,7 +143,8 @@ async function proceedToCheckout(packageId, basePrice) {
 
     const orderData = {
         packageId: packageId,
-        packageName: packageId === 'classic' ? 'Classic Autumn Package' : 'Premium Harvest Package',
+        packageName: packageId === 'classic' ? 'Classic Autumn Package' : 
+                     packageId === 'premium' ? 'Premium Harvest Package' : 'Grand Patch Package',
         basePrice: basePrice,
         totalPrice: totalPrice,
         customizations: {}
@@ -136,7 +153,6 @@ async function proceedToCheckout(packageId, basePrice) {
     requiredFields.forEach(field => {
         const fieldName = field.id.replace(`-${packageId}`, '');
         const mappedFieldName = mapFieldName(fieldName, packageId);
-        console.log(`Field mapping: ${field.id} → ${fieldName} → ${mappedFieldName} = ${field.value}`);
         orderData.customizations[mappedFieldName] = field.value;
     });
 

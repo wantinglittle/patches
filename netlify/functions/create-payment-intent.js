@@ -39,6 +39,22 @@ const PACKAGE_CATALOG = {
       },
     },
   },
+  grand: {
+    name: 'Grand Patch Package',
+    basePrice: 89500, // $895
+    options: {
+      delivery: {
+        week1: 0,
+        week2: 0,
+        week3: 0,
+        week4: 0,
+      },
+      setup: {
+        'delivery-only': 0,
+        'full-setup': 9000, // $90 extra
+      },
+    },
+  },
 };
 
 // Validate and calculate price server-side
