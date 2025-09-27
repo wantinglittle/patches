@@ -122,7 +122,7 @@ function initializePriceUpdates() {
     }
 }
 
-// Proceed to Stripe checkout
+// Proceed to customer info collection
 async function proceedToCheckout(packageId, basePrice) {
     const requiredFields = document.querySelectorAll(`#customization-${packageId} .dropdown`);
     let allFieldsSelected = true;
@@ -156,7 +156,93 @@ async function proceedToCheckout(packageId, basePrice) {
         orderData.customizations[mappedFieldName] = field.value;
     });
 
-    await showCheckoutModal(orderData);
+    // Store order data globally and show customer info modal
+    window.currentOrderData = orderData;
+    showCustomerInfoModal(orderData);
+}
+
+// Show customer information modal
+function showCustomerInfoModal(orderData) {
+    const modal = document.getElementById('customer-info-modal');
+    modal.style.display = 'flex';
+    
+    // Populate order summary
+    const summaryContent = document.getElementById('order-summary-content');
+    const deliveryText = orderData.customizations.delivery === 'week1' ? 'Week of October 6th, 2025' :
+                        orderData.customizations.delivery === 'week2' ? 'Week of October 13th, 2025' :
+                        orderData.customizations.delivery === 'week3' ? 'Week of October 20th, 2025' :
+                        'Week of October 27th, 2025';
+    
+    const setupText = orderData.customizations.setup === 'full-setup' || orderData.customizations.setup === 'setup-service' ? 
+                     'Professional Setup (+$90)' : 'DIY Delivery Only';
+    
+    summaryContent.innerHTML = `
+        <div class="summary-line"><strong>${orderData.packageName}</strong></div>
+        <div class="summary-line">Delivery: ${deliveryText}</div>
+        <div class="summary-line">Setup: ${setupText}</div>
+        <div class="summary-total"><strong>Total: $${orderData.totalPrice.toFixed(2)}</strong></div>
+    `;
+    
+    // Set up the proceed to payment button
+    const proceedButton = document.getElementById('proceed-to-payment');
+    proceedButton.onclick = async function() {
+        if (validateCustomerForm()) {
+            const customerData = collectCustomerData();
+            const completeOrderData = {
+                ...orderData,
+                customer: customerData
+            };
+            closeCustomerInfo();
+            await showCheckoutModal(completeOrderData);
+        }
+    };
+}
+
+// Close customer info modal
+function closeCustomerInfo() {
+    const modal = document.getElementById('customer-info-modal');
+    modal.style.display = 'none';
+}
+
+// Validate customer information form
+function validateCustomerForm() {
+    const requiredFields = [
+        'customer-name', 'customer-email', 'customer-phone',
+        'delivery-address', 'delivery-city', 'delivery-state', 'delivery-zip'
+    ];
+    
+    let allValid = true;
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+            field.style.borderColor = '#F44336';
+            allValid = false;
+        } else {
+            field.style.borderColor = '#DEB887';
+        }
+    });
+    
+    if (!allValid) {
+        alert('Please fill out all required fields.');
+    }
+    
+    return allValid;
+}
+
+// Collect customer data from form
+function collectCustomerData() {
+    return {
+        name: document.getElementById('customer-name').value.trim(),
+        email: document.getElementById('customer-email').value.trim(),
+        phone: document.getElementById('customer-phone').value.trim(),
+        address: {
+            street: document.getElementById('delivery-address').value.trim(),
+            city: document.getElementById('delivery-city').value.trim(),
+            state: document.getElementById('delivery-state').value.trim(),
+            zip: document.getElementById('delivery-zip').value.trim()
+        },
+        deliveryNotes: document.getElementById('delivery-notes').value.trim()
+    };
 }
 
 // Show Stripe checkout modal
@@ -168,12 +254,20 @@ async function showCheckoutModal(orderData) {
         if (!stripe) throw new Error('Stripe not initialized. Please refresh the page.');
 
         // Debug: Log what we're sending to the server
-        console.log('Sending to server:', { packageId: orderData.packageId, customizations: orderData.customizations });
+        console.log('Sending to server:', { 
+            packageId: orderData.packageId, 
+            customizations: orderData.customizations,
+            customer: orderData.customer
+        });
         
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ packageId: orderData.packageId, customizations: orderData.customizations })
+            body: JSON.stringify({ 
+                packageId: orderData.packageId, 
+                customizations: orderData.customizations,
+                customer: orderData.customer
+            })
         });
 
         if (!response.ok) {

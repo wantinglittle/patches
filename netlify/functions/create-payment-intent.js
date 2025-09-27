@@ -108,10 +108,10 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { packageId, customizations } = JSON.parse(event.body);
+    const { packageId, customizations, customer } = JSON.parse(event.body);
     
     // Debug: Log what we received from frontend
-    console.log('Server received:', { packageId, customizations });
+    console.log('Server received:', { packageId, customizations, customer });
 
     if (!packageId || !customizations) {
       return {
@@ -136,17 +136,50 @@ exports.handler = async (event, context) => {
 
     console.log(`Creating payment intent for ${packageId}, amount: ${validation.totalPrice}`);
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    // Create comprehensive order metadata
+    const metadata = {
+      packageId,
+      packageName: PACKAGE_CATALOG[packageId].name,
+      customizations: JSON.stringify(customizations),
+      totalPrice: (validation.totalPrice / 100).toString(), // store in dollars
+    };
+
+    // Add customer information to metadata if provided
+    if (customer) {
+      metadata.customerName = customer.name || '';
+      metadata.customerEmail = customer.email || '';
+      metadata.customerPhone = customer.phone || '';
+      if (customer.address) {
+        metadata.deliveryAddress = `${customer.address.street}, ${customer.address.city}, ${customer.address.state} ${customer.address.zip}`;
+      }
+      metadata.deliveryNotes = customer.deliveryNotes || '';
+      
+      // Create readable delivery info
+      const deliveryText = customizations.delivery === 'week1' ? 'Week of October 6th, 2025' :
+                          customizations.delivery === 'week2' ? 'Week of October 13th, 2025' :
+                          customizations.delivery === 'week3' ? 'Week of October 20th, 2025' :
+                          'Week of October 27th, 2025';
+      
+      const setupText = customizations.setup === 'full-setup' || customizations.setup === 'setup-service' ? 
+                       'Professional Setup (+$90)' : 'DIY Delivery Only';
+      
+      metadata.deliveryDate = deliveryText;
+      metadata.setupOption = setupText;
+    }
+
+    const paymentIntentData = {
       amount: validation.totalPrice,
       currency: 'usd',
       automatic_payment_methods: { enabled: true },
-      metadata: {
-        packageId,
-        packageName: PACKAGE_CATALOG[packageId].name,
-        customizations: JSON.stringify(customizations),
-        totalPrice: (validation.totalPrice / 100).toString(), // store in dollars
-      },
-    });
+      metadata,
+    };
+
+    // Add receipt email if customer email is provided
+    if (customer && customer.email) {
+      paymentIntentData.receipt_email = customer.email;
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create(paymentIntentData);
 
     console.log(`Payment intent created: ${paymentIntent.id} for $${validation.totalPrice / 100}`);
 

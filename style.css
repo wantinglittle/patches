@@ -734,6 +734,90 @@ body {
   padding: 30px;
 }
 
+/* Customer Information Form */
+.customer-info-form .form-row {
+  display: grid;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.customer-info-form .form-row:has(.form-group:nth-child(3)) {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.customer-info-form .form-row:not(:has(.form-group:nth-child(3))) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.customer-info-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-info-form .form-group:only-child {
+  grid-column: 1 / -1;
+}
+
+.customer-info-form label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.customer-info-form input,
+.customer-info-form textarea {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.customer-info-form input:focus,
+.customer-info-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.customer-info-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Order Summary in Modal */
+.order-summary {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 25px 0;
+}
+
+.order-summary h4 {
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  margin: 0 0 15px 0;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
 #payment-element {
   margin-bottom: 20px;
 }
