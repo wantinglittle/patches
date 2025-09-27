@@ -163,12 +163,31 @@ async function proceedToCheckout(packageId, basePrice) {
 
 // Show customer information modal
 function showCustomerInfoModal(orderData) {
-    const modal = document.getElementById('customer-info-modal');
-    if (!modal) {
-        console.error('Customer info modal not found');
-        alert('Error: Customer form not available. Please refresh the page and try again.');
-        return;
-    }
+    console.log('Looking for customer-info-modal...');
+    console.log('All modals on page:', document.querySelectorAll('.modal'));
+    
+    // Wait a moment for DOM to be ready if needed
+    setTimeout(() => {
+        const modal = document.getElementById('customer-info-modal');
+        console.log('Modal found:', modal);
+        
+        if (!modal) {
+            console.error('Customer info modal not found');
+            // Let's check if any element with that ID exists
+            const allElements = document.querySelectorAll('*');
+            const elementsWithId = Array.from(allElements).filter(el => el.id.includes('customer'));
+            console.log('Elements with customer in ID:', elementsWithId);
+            alert('Error: Customer form not available. Please refresh the page and try again.');
+            return;
+        }
+        
+        // Call the actual modal setup function
+        setupCustomerModal(modal, orderData);
+    }, 100);
+}
+
+// Set up the customer modal content and display
+function setupCustomerModal(modal, orderData) {
     modal.style.display = 'flex';
     
     // Populate order summary
