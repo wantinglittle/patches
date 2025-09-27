@@ -17,9 +17,9 @@ const PACKAGE_CATALOG = {
         week3: 0,
         week4: 0,
       },
-      addons: {
-        none: 0,
-        'setup-classic': 9000, // $90 extra
+      setup: {
+        'none': 0,
+        'setup-service': 9000, // $90 extra
       },
     },
   },
@@ -33,11 +33,9 @@ const PACKAGE_CATALOG = {
         week3: 0,
         week4: 0,
       },
-      addons: {
-        none: 0,
-        scarecrow: 7500,  // $75 extra
-        lighting: 12500,  // $125 extra
-        maintenance: 10000, // $100 extra
+      setup: {
+        'delivery-only': 0,
+        'full-setup': 9000, // $90 extra
       },
     },
   },
@@ -95,6 +93,9 @@ exports.handler = async (event, context) => {
 
   try {
     const { packageId, customizations } = JSON.parse(event.body);
+    
+    // Debug: Log what we received from frontend
+    console.log('Server received:', { packageId, customizations });
 
     if (!packageId || !customizations) {
       return {
