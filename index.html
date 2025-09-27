@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Transform Your Porch This Autumn</h1>
-            <p>Bringing the pumpkin patch to your porch every autumn, creating a welcoming and festive invitation as friends enter your home.</p>
+            <p>Bringing the pumpkin patch to your porch, creating a welcoming and festive invitation to friends into your home every autumn.</p>
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="scrollToSection('packages')">
                     <i class="fas fa-leaf"></i> Shop Packages
@@ -65,7 +66,7 @@
                     </div>
                     <div class="package-content">
                         <h3>Petite Patch</h3>
-                        <p>Welcome guests to your home with a sweet coloring of fall. The Petite Patch provides you with a touch of the traditional orange while showing off the unique features of the Heirloom pumpkins.</p>
+                        <p>Welcome guests to your home with a sweet coloring of fall. The Petite Patch provides you with a touch of the traditional orange while showing off the unique features of the Heirloom pumpkins.</p>
                         
                         <ul class="package-features">
                             <li><i class="fas fa-check-circle"></i> 2 Large Jack O Lanterns</li>
@@ -215,6 +216,83 @@
                             </div>
 
                             <button class="btn btn-secondary" onclick="proceedToCheckout('premium', 625)">
+                                <i class="fas fa-credit-card"></i> Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grand Patch Package -->
+                <div class="package-card" data-package-id="grand">
+                    <div class="package-image">
+                        <img src="https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Grand Patch Package">
+                        <!-- <div class="package-badge premium">Grand</div> -->
+                    </div>
+                    <div class="package-content">
+                        <h3>Grand Patch</h3>
+                        <p>The ultimate autumn display! Our Grand Patch transforms your porch into a spectacular harvest showcase with an abundant collection of premium pumpkins, gourds, and a rustic hay bale centerpiece.</p>
+                        
+                        <ul class="package-features">
+                            <li><i class="fas fa-check-circle"></i> 8 Large Jack O Lanterns</li>
+                            <li><i class="fas fa-check-circle"></i> 7 Medium Jack O Lanterns</li>
+                            <li><i class="fas fa-check-circle"></i> 8 White Ghost Pumpkins</li>
+                            <li><i class="fas fa-check-circle"></i> 7 Pie Pumpkins</li>
+                            <li><i class="fas fa-check-circle"></i> 14 Specialty/Heirloom Pumpkins</li>
+                            <li><i class="fas fa-check-circle"></i> 10 Gourds</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Hay Bale</li>
+                        </ul>
+
+                        <div class="package-gallery">
+                            <div class="gallery-main">
+                                <img src="https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Grand Package Main">
+                            </div>
+                            <div class="gallery-thumbnails">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" alt="Grand Package 2" onclick="changeMainImage(this, 'grand')">
+                                <img src="https://images.unsplash.com/photo-1509909756405-be0199881695?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200" alt="Grand Package 3" onclick="changeMainImage(this, 'grand')">
+                                <img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="Grand Package 4" onclick="changeMainImage(this, 'grand')">
+                            </div>
+                        </div>
+
+                        <div class="package-price">
+                            <span class="price">$895.00</span>
+                            <span class="price-note">complete package</span>
+                        </div>
+
+                        <button class="btn btn-primary package-buy-btn" onclick="showCustomization('grand')">
+                            <i class="fas fa-shopping-cart"></i> Buy Now
+                        </button>
+
+                        <!-- Customization Options (Initially Hidden) -->
+                        <div class="customization-panel" id="customization-grand" style="display: none;">
+                            <h4>Customize Your Package</h4>
+                            
+                            <div class="dropdown-group">
+                                <label for="delivery-date-grand">Delivery Date:</label>
+                                <select id="delivery-date-grand" class="dropdown">
+                                    <option value="">Select delivery date</option>
+                                    <option value="week1">Week of October 6th, 2025</option>
+                                    <option value="week2">Week of October 13th, 2025</option>
+                                    <option value="week3">Week of October 20th, 2025</option>
+                                    <option value="week4">Week of October 27th, 2025</option>
+                                </select>
+                            </div>
+
+                            <div class="dropdown-group">
+                                <label for="setup-grand">Do you want us to do the design and layout?</label>
+                                <select id="setup-grand" class="dropdown">
+                                    <option value="">Select setup option</option>
+                                    <option value="delivery-only">No thanks, I've got this</option>
+                                    <option value="full-setup">Yes, please! (+$90)</option>
+                                </select>
+                            </div>
+
+                            <!-- Dynamic Total Price Display -->
+                            <div class="total-price-display">
+                                <div class="total-price-label">Total Price:</div>
+                                <div class="total-price-amount" id="total-grand">$895.00</div>
+                            </div>
+
+                            <button class="btn btn-secondary" onclick="proceedToCheckout('grand', 895)">
                                 <i class="fas fa-credit-card"></i> Proceed to Checkout
                             </button>
                         </div>
