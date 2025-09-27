@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
-
+    <link rel="icon" href="images/favicon.ico" type="images/x-icon"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="package-price">
-                            <span class="price">$299.00</span>
+                            <span class="price">$360.00</span>
                             <span class="price-note">complete package</span>
                         </div>
 
@@ -99,7 +99,7 @@
                         <div class="customization-panel" id="customization-classic" style="display: none;">
                             <h4>Customize Your Package</h4>
                             
-                            <div class="dropdown-group">
+                            <!-- <div class="dropdown-group">
                                 <label for="color-scheme-classic">Color Scheme:</label>
                                 <select id="color-scheme-classic" class="dropdown">
                                     <option value="">Select color scheme</option>
@@ -107,33 +107,34 @@
                                     <option value="elegant">White & Orange Elegant</option>
                                     <option value="rustic">Rustic Multi-Color</option>
                                 </select>
-                            </div>
+                            </div> -->
 
                             <div class="dropdown-group">
                                 <label for="delivery-date-classic">Delivery Date:</label>
                                 <select id="delivery-date-classic" class="dropdown">
                                     <option value="">Select delivery date</option>
-                                    <option value="weekend">This Weekend</option>
-                                    <option value="next-week">Next Week</option>
-                                    <option value="custom">Custom Date</option>
+                                    <option value="week1">Week of October 6th, 2025</option>
+                                    <option value="week2">Week of October 13th, 2025</option>
+                                    <option value="week3">Week of October 20th, 2025</option>
+                                    <option value="week4">Week of October 27th, 2025</option>
                                 </select>
                             </div>
 
                             <div class="dropdown-group">
-                                <label for="add-ons-classic">Add-ons:</label>
+                                <label for="add-ons-classic">Do you want us to do the design and layout?</label>
                                 <select id="add-ons-classic" class="dropdown">
-                                    <option value="">Select add-ons</option>
-                                    <option value="none">No Add-ons</option>
-                                    <option value="extra-mums">Extra Mums (+$25)</option>
-                                    <option value="corn-stalks">Corn Stalks (+$35)</option>
-                                    <option value="setup-service">Setup Service (+$50)</option>
+                                    <option value="">Select design option</option>
+                                    <option value="none">No thanks, I've got this</option>
+                                    <!-- <option value="extra-mums">Extra Mums (+$25)</option>
+                                    <option value="corn-stalks">Corn Stalks (+$35)</option> -->
+                                    <option value="setup-service">Yes, please! (+$90)</option>
                                 </select>
                             </div>
 
                             <!-- Dynamic Total Price Display -->
                             <div class="total-price-display">
                                 <div class="total-price-label">Total Price:</div>
-                                <div class="total-price-amount" id="total-classic">$299.00</div>
+                                <div class="total-price-amount" id="total-classic">$360.00</div>
                             </div>
 
                             <button class="btn btn-secondary" onclick="proceedToCheckout('classic', 299)">
@@ -175,7 +176,7 @@
                         </div>
 
                         <div class="package-price">
-                            <span class="price">$549.00</span>
+                            <span class="price">$625.00</span>
                             <span class="price-note">complete package</span>
                         </div>
 
@@ -187,7 +188,7 @@
                         <div class="customization-panel" id="customization-premium" style="display: none;">
                             <h4>Customize Your Package</h4>
                             
-                            <div class="dropdown-group">
+                            <!-- <div class="dropdown-group">
                                 <label for="style-theme-premium">Style Theme:</label>
                                 <select id="style-theme-premium" class="dropdown">
                                     <option value="">Select style theme</option>
@@ -195,19 +196,30 @@
                                     <option value="farmhouse">Rustic Farmhouse</option>
                                     <option value="modern">Modern Autumn Chic</option>
                                 </select>
-                            </div>
-
+                            </div> -->
                             <div class="dropdown-group">
-                                <label for="setup-service-premium">Setup Service:</label>
-                                <select id="setup-service-premium" class="dropdown">
-                                    <option value="">Select setup option</option>
-                                    <option value="full-setup">Full Professional Setup</option>
-                                    <option value="delivery-only">Delivery Only</option>
-                                    <option value="diy-guide">DIY with Guide</option>
+                                <label for="delivery-date-classic">Delivery Date:</label>
+                                <select id="delivery-date-classic" class="dropdown">
+                                    <option value="">Select delivery date</option>
+                                    <option value="week1">Week of October 6th, 2025</option>
+                                    <option value="week2">Week of October 13th, 2025</option>
+                                    <option value="week3">Week of October 20th, 2025</option>
+                                    <option value="week4">Week of October 27th, 2025</option>
                                 </select>
                             </div>
 
                             <div class="dropdown-group">
+                                <label for="setup-service-premium">Do you want us to do the design and layout?</label>
+                                <select id="setup-service-premium" class="dropdown">
+                                    <option value="">Select setup option</option>
+                                    <option value="delivery-only">No thanks, I've got this</option>
+                                    <option value="full-setup">Yes, please! (+$90)</option>
+                                    
+                                    <!-- <option value="diy-guide">DIY with Guide</option> -->
+                                </select>
+                            </div>
+
+                            <!-- <div class="dropdown-group">
                                 <label for="premium-add-ons">Premium Add-ons:</label>
                                 <select id="premium-add-ons" class="dropdown">
                                     <option value="">Select premium add-ons</option>
@@ -216,12 +228,12 @@
                                     <option value="lighting">LED Lighting (+$125)</option>
                                     <option value="maintenance">Monthly Maintenance (+$100)</option>
                                 </select>
-                            </div>
+                            </div> -->
 
                             <!-- Dynamic Total Price Display -->
                             <div class="total-price-display">
                                 <div class="total-price-label">Total Price:</div>
-                                <div class="total-price-amount" id="total-premium">$549.00</div>
+                                <div class="total-price-amount" id="total-premium">$625.00</div>
                             </div>
 
                             <button class="btn btn-secondary" onclick="proceedToCheckout('premium', 549)">
