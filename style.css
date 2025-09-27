@@ -739,14 +739,11 @@ body {
   display: grid;
   gap: 15px;
   margin-bottom: 20px;
-}
-
-.customer-info-form .form-row:has(.form-group:nth-child(3)) {
-  grid-template-columns: 2fr 1fr 1fr;
-}
-
-.customer-info-form .form-row:not(:has(.form-group:nth-child(3))) {
   grid-template-columns: 1fr 1fr;
+}
+
+.customer-info-form .form-row.three-cols {
+  grid-template-columns: 2fr 1fr 1fr;
 }
 
 .customer-info-form .form-group {

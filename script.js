@@ -163,27 +163,97 @@ async function proceedToCheckout(packageId, basePrice) {
 
 // Show customer information modal
 function showCustomerInfoModal(orderData) {
-    console.log('Looking for customer-info-modal...');
-    console.log('All modals on page:', document.querySelectorAll('.modal'));
+    // Try immediate access first
+    let modal = document.getElementById('customer-info-modal');
     
-    // Wait a moment for DOM to be ready if needed
-    setTimeout(() => {
-        const modal = document.getElementById('customer-info-modal');
-        console.log('Modal found:', modal);
-        
-        if (!modal) {
-            console.error('Customer info modal not found');
-            // Let's check if any element with that ID exists
-            const allElements = document.querySelectorAll('*');
-            const elementsWithId = Array.from(allElements).filter(el => el.id.includes('customer'));
-            console.log('Elements with customer in ID:', elementsWithId);
-            alert('Error: Customer form not available. Please refresh the page and try again.');
-            return;
-        }
-        
-        // Call the actual modal setup function
+    if (modal) {
         setupCustomerModal(modal, orderData);
+        return;
+    }
+    
+    // If not found, wait for DOM and try again
+    setTimeout(() => {
+        modal = document.getElementById('customer-info-modal');
+        if (modal) {
+            setupCustomerModal(modal, orderData);
+        } else {
+            // Fallback: Create the modal dynamically if it doesn't exist
+            createCustomerModal(orderData);
+        }
     }, 100);
+}
+
+// Create customer modal dynamically if it doesn't exist
+function createCustomerModal(orderData) {
+    const modalHTML = `
+        <div id="customer-info-modal" class="modal" style="display: flex;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Delivery Information</h3>
+                    <span class="close" onclick="closeCustomerInfo()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="customer-info-form" class="customer-info-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-name">Full Name *</label>
+                                <input type="text" id="customer-name" name="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-email">Email Address *</label>
+                                <input type="email" id="customer-email" name="customerEmail" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-phone">Phone Number *</label>
+                                <input type="tel" id="customer-phone" name="customerPhone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="delivery-address">Delivery Address *</label>
+                            <input type="text" id="delivery-address" name="deliveryAddress" placeholder="Street Address" required>
+                        </div>
+                        
+                        <div class="form-row three-cols">
+                            <div class="form-group">
+                                <label for="delivery-city">City *</label>
+                                <input type="text" id="delivery-city" name="deliveryCity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-state">State *</label>
+                                <input type="text" id="delivery-state" name="deliveryState" value="CO" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-zip">ZIP Code *</label>
+                                <input type="text" id="delivery-zip" name="deliveryZip" pattern="[0-9]{5}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="delivery-notes">Delivery Instructions (Optional)</label>
+                            <textarea id="delivery-notes" name="deliveryNotes" rows="3" placeholder="Any special instructions for delivery or setup..."></textarea>
+                        </div>
+                        
+                        <div class="order-summary">
+                            <h4>Order Summary</h4>
+                            <div id="order-summary-content"></div>
+                        </div>
+                        
+                        <button type="button" id="proceed-to-payment" class="btn btn-primary">
+                            <i class="fas fa-credit-card"></i> Proceed to Payment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = document.getElementById('customer-info-modal');
+    setupCustomerModal(modal, orderData);
 }
 
 // Set up the customer modal content and display
