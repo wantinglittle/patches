@@ -378,9 +378,35 @@ async function showCheckoutModal(orderData) {
         const { client_secret, amount } = await response.json();
         clientSecret = client_secret;
 
-        const modalHeader = document.querySelector('.modal-header h3');
+        // Update the checkout modal header specifically
+        const checkoutModal = document.getElementById('checkout-modal');
+        const modalHeader = checkoutModal.querySelector('.modal-header h3');
         if (modalHeader) {
             modalHeader.innerHTML = `Complete Your Order - <span style="color: #D2691E;">$${(amount / 100).toFixed(2)}</span>`;
+        }
+        
+        // Also add amount display above the payment element
+        const paymentContainer = document.getElementById('payment-element');
+        const existingAmountDisplay = checkoutModal.querySelector('.amount-display');
+        if (!existingAmountDisplay && paymentContainer) {
+            const amountDisplay = document.createElement('div');
+            amountDisplay.className = 'amount-display';
+            amountDisplay.style.cssText = `
+                background: #f8f9fa;
+                border: 2px solid #D2691E;
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                text-align: center;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #3E2723;
+            `;
+            amountDisplay.innerHTML = `
+                <div style="margin-bottom: 5px;">Total Amount:</div>
+                <div style="font-size: 1.5rem; color: #D2691E;">$${(amount / 100).toFixed(2)}</div>
+            `;
+            paymentContainer.parentNode.insertBefore(amountDisplay, paymentContainer);
         }
 
         elements = stripe.elements({
