@@ -124,7 +124,7 @@ body {
 .hero {
   height: 100vh;
   background: linear-gradient(rgba(62, 39, 35, 0.4), rgba(62, 39, 35, 0.6)),
-              url('images/herobg2.jpg') center/cover;
+              url('images/herobg.jpg') center/cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -267,8 +267,9 @@ body {
 
 .packages-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 30px;
+  justify-content: center;
 }
 
 .package-card {
