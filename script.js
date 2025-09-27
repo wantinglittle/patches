@@ -164,10 +164,20 @@ async function proceedToCheckout(packageId, basePrice) {
 // Show customer information modal
 function showCustomerInfoModal(orderData) {
     const modal = document.getElementById('customer-info-modal');
+    if (!modal) {
+        console.error('Customer info modal not found');
+        alert('Error: Customer form not available. Please refresh the page and try again.');
+        return;
+    }
     modal.style.display = 'flex';
     
     // Populate order summary
     const summaryContent = document.getElementById('order-summary-content');
+    if (!summaryContent) {
+        console.error('Order summary content element not found');
+        alert('Error: Order summary not available. Please refresh the page and try again.');
+        return;
+    }
     const deliveryText = orderData.customizations.delivery === 'week1' ? 'Week of October 6th, 2025' :
                         orderData.customizations.delivery === 'week2' ? 'Week of October 13th, 2025' :
                         orderData.customizations.delivery === 'week3' ? 'Week of October 20th, 2025' :
