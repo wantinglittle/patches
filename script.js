@@ -174,8 +174,8 @@ async function proceedToCheckout(packageId, basePrice) {
 
     const orderData = {
         packageId: packageId,
-        packageName: packageId === 'classic' ? 'Classic Autumn Package' : 
-                     packageId === 'premium' ? 'Premium Harvest Package' : 'Grand Patch Package',
+        packageName: packageId === 'classic' ? 'Petite Patch Package' : 
+                     packageId === 'premium' ? 'Classic Patch Package' : 'Grand Patch Package',
         basePrice: basePrice,
         totalPrice: totalPrice,
         customizations: {}
