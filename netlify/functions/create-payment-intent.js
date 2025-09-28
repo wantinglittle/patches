@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 const PACKAGE_CATALOG = {
   classic: {
     name: 'Classic Autumn Package',
-    basePrice: 36000, // $360
+    basePrice: 25000, // $250
     options: {
       delivery: {
         week1: 0,

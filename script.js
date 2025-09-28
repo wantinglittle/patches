@@ -110,7 +110,7 @@ function updateTotalPriceDisplay(packageId, basePrice) {
 function initializePriceUpdates() {
     const classicDropdowns = document.querySelectorAll('#customization-classic .dropdown');
     classicDropdowns.forEach(dropdown => {
-        dropdown.addEventListener('change', () => updateTotalPriceDisplay('classic', 360));
+        dropdown.addEventListener('change', () => updateTotalPriceDisplay('classic', 250));
     });
 
     const premiumDropdowns = document.querySelectorAll('#customization-premium .dropdown');
@@ -138,7 +138,7 @@ function initializePriceUpdates() {
     // Add zone listeners for all packages
     const classicZone = document.getElementById('zone-classic');
     if (classicZone) {
-        classicZone.addEventListener('change', () => updateTotalPriceDisplay('classic', 360));
+        classicZone.addEventListener('change', () => updateTotalPriceDisplay('classic', 250));
     }
 
     const premiumZone = document.getElementById('zone-premium');
