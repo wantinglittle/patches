@@ -74,10 +74,11 @@ function calculateTotalPrice(packageId, basePrice) {
     const setupSelect = document.getElementById(`setup-${packageId}`);
     if (setupSelect && setupSelect.value) {
         // All packages charge $90 for setup service
-        if ((packageId === 'classic' && setupSelect.value === 'setup-service') ||
-            (packageId === 'premium' && setupSelect.value === 'full-setup') ||
+        if ((packageId === 'premium' && setupSelect.value === 'full-setup') ||
             (packageId === 'grand' && setupSelect.value === 'full-setup')) {
             total += 90;
+        } else if (packageId === 'classic' && setupSelect.value === 'setup-service') {
+            total += 30;
         }
     }
     

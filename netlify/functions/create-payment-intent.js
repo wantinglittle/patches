@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 // Package catalog for server-side validation (all amounts in cents)
 const PACKAGE_CATALOG = {
   classic: {
-    name: 'Classic Autumn Package',
+    name: 'Petite Patch',
     basePrice: 25000, // $250
     options: {
       delivery: {
@@ -19,7 +19,7 @@ const PACKAGE_CATALOG = {
       },
       setup: {
         'none': 0,
-        'setup-service': 9000, // $90 extra
+        'setup-service': 3000, // $30 extra
       },
       zone: {
         zone1: 0, // Free delivery
@@ -29,7 +29,7 @@ const PACKAGE_CATALOG = {
     },
   },
   premium: {
-    name: 'Premium Harvest Package',
+    name: 'Classic Patch',
     basePrice: 62500, // $625
     options: {
       delivery: {
